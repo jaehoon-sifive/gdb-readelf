@@ -53,8 +53,8 @@ class SymbolPrinter (gdb.Command):
             self.__select_printer__(field_name, field_type)
 
     def __print_symbol__(self, symbol_name):
-        symbol = gdb.lookup_global_symbol(symbol_name)
-        if symbol != None:
+        try:
+            symbol = gdb.parse_and_eval(symbol_name)
             symbol_type = symbol.type
             if symbol_type.code == gdb.TYPE_CODE_TYPEDEF:
                 symbol_type = symbol.type.unqualified ().strip_typedefs ()  
@@ -65,8 +65,7 @@ class SymbolPrinter (gdb.Command):
             self.__print_title__()
             self.__format_print__(symbol_addr, symbol_type.sizeof, symbol_name, symbol_type_name)
             self.__select_printer__(symbol_name, symbol_type)
-
-        else:
+        except gdb.error:
             print "No symbol found - " + symbol_name
 
     def __print_all_symbols__(self):
