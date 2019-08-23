@@ -15,10 +15,10 @@ class SymbolPrinter (gdb.Command):
         self.print_all = False # print all symbols?
 
     def __print_title__(self):
-        print "%-12s %-10s %-40s %s" % ("address", "size", "variable name", "type")
+        print("%-12s %-10s %-40s %s" % ("address", "size", "variable name", "type"))
   
     def __format_print__(self, addr, size, name, typename):
-        print "%-12s 0x%-8x %-40s %s" % (addr, size, name, typename)
+        print("%-12s 0x%-8x %-40s %s" % (addr, size, name, typename))
 
     def __select_printer__(self, symbol_name, symbol_type):
         code = symbol_type.code
@@ -68,7 +68,7 @@ class SymbolPrinter (gdb.Command):
             self.__select_printer__(symbol_name, symbol_type)
         except gdb.error:
             if self.print_all == False:
-                print "No symbol found - " + symbol_name
+                print("No symbol found - " + symbol_name)
 
     def __print_all_symbols__(self):
         symbol_full_list = gdb.execute("info variables", to_string=True)
