@@ -12,6 +12,7 @@ class SymbolPrinter (gdb.Command):
   
     def __init__ (self):
         super (SymbolPrinter, self).__init__ ("readelf", gdb.COMMAND_USER)
+        self.print_all = False # print all symbols?
 
     def __print_title__(self):
         print "%-12s %-10s %-40s %s" % ("address", "size", "variable name", "type")
@@ -66,7 +67,8 @@ class SymbolPrinter (gdb.Command):
             self.__format_print__(symbol_addr, symbol_type.sizeof, symbol_name, symbol_type_name)
             self.__select_printer__(symbol_name, symbol_type)
         except gdb.error:
-            print "No symbol found - " + symbol_name
+            if self.print_all == False:
+                print "No symbol found - " + symbol_name
 
     def __print_all_symbols__(self):
         symbol_full_list = gdb.execute("info variables", to_string=True)
@@ -103,8 +105,10 @@ class SymbolPrinter (gdb.Command):
             gdb.execute("set logging on " + args.output)
 
         if args.all:
+            self.print_all = True
             self.__print_all_symbols__()
         elif args.sym:
+            self.print_all = False
             self.__print_symbol__(args.sym)
 
         if args.output != 'stdout':
