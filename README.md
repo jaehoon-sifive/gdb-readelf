@@ -1,8 +1,12 @@
 It's gdb python extension to show symbol information of variables
 
-How to launch:
+How to launch (manual way):
 
 	gdb [elf] -x readelf.py ; $ gdb dhrystone.elf -x readelf.py
+
+How to launch (automatic way):
+
+	gdb -q [elf] -batch -ex 'readelf.py' -ex 'readelf -a -o file'
 
 How to use in gdb:
 
