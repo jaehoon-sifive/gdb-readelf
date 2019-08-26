@@ -6,7 +6,8 @@ How to launch (manual way):
 
 How to launch (automatic way):
 
-	gdb -q [elf] -batch -ex 'readelf.py' -ex 'readelf -a -o file'
+	gdb -q [elf] -batch -ex 'source readelf.py' -ex 'readelf -a -o file' ; gdb -q dhrystone.elf -batch -ex 'source readelf.py' -ex 'readelf -a -o output.txt'
+	
 
 How to use in gdb:
 
